@@ -1,0 +1,158 @@
+<%- include("partials/header") -%>
+
+    <div class="container">
+        <form method="post" autocomplete="off" enctype="multipart/form-data">
+            <br>
+            <fieldset>
+                <legend>
+                    <h2>Add a new Recipe</h2>
+                </legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="recipeTitle">Recipe Title</label>
+                            <input required name="recipeTitle" type="text" class="form-control"
+                                placeholder="Enter Recipe Title here" id="recipeTitle">
+                        </div>
+                    </div>
+                    <!--  col-md-6   -->
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Type</label>
+                            <select class="form-control" name="recipeType">
+                                <option value="Starter">Starter</option>
+                                <option value="Main Course">Main Course</option>
+                                <option value="Soups">Soups</option>
+                                <option value="Dessert">Dessert</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--  col-md-6   -->
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="username">Your Name</label>
+                            <input required name="UserName" type="text" class="form-control"
+                                placeholder="Enter your name here" id="username">
+                        </div>
+                    </div>
+                    <!--  col-md-6   -->
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input required name="userEmail" type="email" class="form-control" id="email"
+                                placeholder="Email">
+                        </div>
+                    </div>
+                    <!--  col-md-6   -->
+                </div>
+                <!--  row   -->
+
+
+                <div class="row">
+
+                    <!--  col-md-6   -->
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label for="Recipe">Recipe </label>
+                            <textarea name="Recipe" class="form-control" id="Recipe" minlength="50"
+                                placeholder="Describe how to cook the Recipe" cols="30" rows="4" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="url">Upload Image</label>
+                            <input required name="uploadImage" type="file" class="form-control" id="file"
+                                placeholder="State">
+                        </div>
+
+                    </div>
+                    <!--  col-md-6   -->
+                </div>
+
+
+                <a href="/thankyou"><button id="submit" type="submit" class="btn btn-primary">Submit</button></a>
+            </fieldset>
+        </form>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+    <!-- Jquery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="../../script/script.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            function validateNumbers() {
+                let flag = false;
+                if ($('#Recipe').val().length <= 50) {
+                    alert("Please provide a deatiled Recipe.")
+                } else flag = true;
+                return flag;
+            }
+            function validateInputs() {
+                let flag = false;
+                if ($('#username').val().length == 0) {
+                    alert("Enter a valid name");
+                } else if ($('#recipeTitle').val().length == 0) {
+                    alert("Enter a Reciepe Title");
+                } else flag = true;
+                return flag;
+            }
+            $('#submit').click(function (e) {
+                let flag = false;
+                if (!validateInputs()) {
+                    e.preventDefault();
+                } else if (!validateNumbers()) {
+                    e.preventDefault();
+                } else if ($('#Recipe').val().length <= 50) {
+                    alert("Please provide a detailed Recipe.")
+                    e.preventDefault();
+                } if (flag) {
+                    alert(flag)
+                    $.ajax({
+                        type: "post",
+                        url: '/addRecipe',
+                        data: {
+                            recipeTitle: $("#recipeTitle").val(),
+                            username: $('#username').val(),
+                            userEmail: $("#email").val(),
+                            Recipe: $("#Recipe").val()
+                        },
+                        success: function (response) {
+                            if (JSON.stringify(response) == "success") {
+                                alert("Recipe Added!")
+                            } else {
+                                alert("Please check the data first")
+                            }
+                        },
+                        error: function (response) {
+                            alert(response)
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+
+    <%- include("partials/footer") -%>

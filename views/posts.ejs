@@ -1,0 +1,34 @@
+<%- include("partials/header") -%>
+        <div class="container">
+            <div class="row border border-secondary ">
+                <div class="post-design col-lg-4 shadow p-3 mb-5 bg-white rounded text-center">
+                    <br>
+                    <img src=<%=postResult.recipe_image_reference %> class=" img-thumbnail img-fluid rounded " width="500"
+                    height='500' alt=<%= postResult.recipe_title %>>
+
+                        <br>
+                        <a href=<%=shareData %> ><button id="download-button"> Share <i class="fa fa-share"
+                                    aria-hidden="true"></i></button></a>
+
+                </div>
+                <div class="col-lg">
+                    <br>
+                    <h2 class="text-left">
+                        <%= postResult.recipe_title %>
+                    </h2>
+                    <strong>Author: </strong> <strong><u>
+                            <%= postResult.recipe_author %>
+                        </u></strong>
+                    <br>
+                    <strong>How to cook:</strong>
+                    <p>
+                        <%= postResult.recipe_information %>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jquery CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+        <script>
+        </script>
