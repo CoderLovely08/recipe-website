@@ -16,7 +16,7 @@ let userObject = {
     imageLink: "data.link"
 }
 let searchQuery = "paneer"
-client.query(`Select * from RecipeInfo where lower(recipe_title) like lower('%${searchQuery}%')`,function (err, result) {
+client.query(`Select * from RecipeInfo `,function (err, result) {
     if (err) console.log(err);
     else console.log(result);
 })
